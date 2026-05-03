@@ -290,7 +290,35 @@
     }
 
     /* ══════════════════════════════════════════════
-       7. COMPOSITION PANEL
+       7. INTRO SECTION
+    ══════════════════════════════════════════════ */
+    .intro-section {
+      padding: 5rem 0 4.5rem;
+      border-bottom: 1px solid var(--line-strong);
+    }
+
+    .intro-lead {
+      font-family: var(--f-jp);
+      font-size: clamp(1rem, 3vw, 1.2rem);
+      font-weight: 500;
+      color: var(--ink);
+      line-height: 1.8;
+      letter-spacing: 0.06em;
+      margin-bottom: 2rem;
+    }
+
+    .intro-body {
+      font-family: var(--f-jp);
+      font-size: 15px;
+      line-height: 2.3;
+      color: var(--bitter);
+      letter-spacing: 0.03em;
+    }
+
+    .intro-body + .intro-body { margin-top: 1.4rem; }
+
+    /* ══════════════════════════════════════════════
+       8. COMPOSITION PANEL
     ══════════════════════════════════════════════ */
     .composition {
       padding: 5rem 0;
@@ -875,13 +903,15 @@
       <span class="ja">目次</span>
     </div>
     <ol class="index-list">
-      <li><a href="#composition"><span class="idx-num">01</span>命式成分表<span class="idx-arrow">›</span></a></li>
-      <li><a href="#article-01"><span class="idx-num">02</span>鳳閣星の章<span class="idx-arrow">›</span></a></li>
-      <li><a href="#article-02"><span class="idx-num">03</span>調舒星の章<span class="idx-arrow">›</span></a></li>
-      <li><a href="#article-03"><span class="idx-num">04</span>戊戌の章<span class="idx-arrow">›</span></a></li>
-      <li><a href="#article-04"><span class="idx-num">05</span>貫索星の章<span class="idx-arrow">›</span></a></li>
-      <li><a href="#prescription"><span class="idx-num">06</span>処方箋<span class="idx-arrow">›</span></a></li>
-      <li><a href="#glossary"><span class="idx-num">07</span>用語辞典<span class="idx-arrow">›</span></a></li>
+      <li><a href="#intro"><span class="idx-num">01</span>読み方<span class="idx-arrow">›</span></a></li>
+      <li><a href="#composition"><span class="idx-num">02</span>命式成分表<span class="idx-arrow">›</span></a></li>
+      <li><a href="#article-00"><span class="idx-num">03</span>総論<span class="idx-arrow">›</span></a></li>
+      <li><a href="#article-01"><span class="idx-num">04</span>鳳閣星の章<span class="idx-arrow">›</span></a></li>
+      <li><a href="#article-02"><span class="idx-num">05</span>調舒星の章<span class="idx-arrow">›</span></a></li>
+      <li><a href="#article-03"><span class="idx-num">06</span>戊戌の章<span class="idx-arrow">›</span></a></li>
+      <li><a href="#article-04"><span class="idx-num">07</span>貫索星の章<span class="idx-arrow">›</span></a></li>
+      <li><a href="#prescription"><span class="idx-num">08</span>処方箋<span class="idx-arrow">›</span></a></li>
+      <li><a href="#glossary"><span class="idx-num">09</span>用語辞典<span class="idx-arrow">›</span></a></li>
       <li><span class="idx-soon"><span class="idx-num">—</span>仕事運の章<span class="idx-arrow">›</span></span></li>
       <li><span class="idx-soon"><span class="idx-num">—</span>暮らしの章<span class="idx-arrow">›</span></span></li>
     </ol>
@@ -889,6 +919,28 @@
 </nav>
 
 <hr class="rule" />
+
+<!-- ══════════════════════════════════════════════
+     INTRO — 読み方
+══════════════════════════════════════════════ -->
+<section class="intro-section" id="intro">
+  <div class="wrap">
+    <div class="section-hd">
+      <span class="u-section-en">How to Read · 読み方</span>
+      <h2 class="u-section-h2">命式は、私を決めつけるものではなく、<br>私に戻るための言葉。</h2>
+    </div>
+    <p class="intro-body">
+      このページでは、算命学の命式を「当たる・当たらない」の結果ではなく、
+      暮らしの中で自分を扱うための研究ノートとして読む。
+    </p>
+    <p class="intro-body">
+      星は性格のラベルではなく、力が出る場所と、消耗しやすい場所を教えてくれる小さな標本。
+      干支は運命の断定ではなく、自分の中に流れている時間や質感の記録。
+      ここに書かれていることは、未来を固定するためのものではなく、
+      しんどい日に、自分を責めすぎないための処方箋。
+    </p>
+  </div>
+</section>
 
 <!-- ══════════════════════════════════════════════
      COMPOSITION PANEL — 命式成分表
@@ -899,6 +951,23 @@
     <div class="section-hd">
       <span class="u-section-en">Composition Panel · 命式成分表</span>
       <h2 class="u-section-h2">あなたの命式の構成</h2>
+    </div>
+
+    <!-- 陽占 人体図 -->
+    <p class="data-label">陽占 — Light Chart / 人体図</p>
+    <div class="hb-wrap">
+      <div class="hb-grid">
+        <div class="hb-cell"><span class="hb-pos">ご先祖様</span><span class="hb-star">貫索星</span></div>
+        <div class="hb-cell"><span class="hb-pos">目上</span><span class="hb-star">司禄星</span></div>
+        <div class="hb-cell"><span class="hb-pos">初年運</span><span class="hb-star">天堂星</span></div>
+        <div class="hb-cell"><span class="hb-pos">配偶者</span><span class="hb-star">牽牛星</span></div>
+        <div class="hb-cell core"><span class="hb-pos">中心</span><span class="hb-star">鳳閣星</span></div>
+        <div class="hb-cell"><span class="hb-pos">社会</span><span class="hb-star">調舒星</span></div>
+        <div class="hb-cell"><span class="hb-pos">晩年運</span><span class="hb-star">天報星</span></div>
+        <div class="hb-cell"><span class="hb-pos">目下</span><span class="hb-star">鳳閣星</span></div>
+        <div class="hb-cell"><span class="hb-pos">中年運</span><span class="hb-star">天庫星</span></div>
+      </div>
+      <p class="chart-note" style="margin-top:0.5rem; margin-bottom:3rem;">中心宮の星が命式の軸となる</p>
     </div>
 
     <!-- 陰占 -->
@@ -938,23 +1007,6 @@
     <p class="chart-note" style="margin-bottom:3rem;">
       ※ <span style="color:var(--oxide);">橙字</span>は異常干支 — an exceptional configuration bearing distinct energy.
     </p>
-
-    <!-- 陽占 人体図 -->
-    <p class="data-label">陽占 — Light Chart / 人体図</p>
-    <div class="hb-wrap">
-      <div class="hb-grid">
-        <div class="hb-cell"><span class="hb-pos">ご先祖様</span><span class="hb-star">貫索星</span></div>
-        <div class="hb-cell"><span class="hb-pos">目上</span><span class="hb-star">司禄星</span></div>
-        <div class="hb-cell"><span class="hb-pos">初年運</span><span class="hb-star">天堂星</span></div>
-        <div class="hb-cell"><span class="hb-pos">配偶者</span><span class="hb-star">牽牛星</span></div>
-        <div class="hb-cell core"><span class="hb-pos">中心</span><span class="hb-star">鳳閣星</span></div>
-        <div class="hb-cell"><span class="hb-pos">社会</span><span class="hb-star">調舒星</span></div>
-        <div class="hb-cell"><span class="hb-pos">晩年運</span><span class="hb-star">天報星</span></div>
-        <div class="hb-cell"><span class="hb-pos">目下</span><span class="hb-star">鳳閣星</span></div>
-        <div class="hb-cell"><span class="hb-pos">中年運</span><span class="hb-star">天庫星</span></div>
-      </div>
-      <p class="chart-note" style="margin-top:0.5rem; margin-bottom:3rem;">中心宮の星が命式の軸となる</p>
-    </div>
 
     <!-- 五行 -->
     <p class="data-label">五行バランス — Five Elements</p>
@@ -1016,6 +1068,70 @@
 ══════════════════════════════════════════════ -->
 <section class="articles" id="articles">
   <div class="wrap">
+
+    <!-- ── ARTICLE 00 : 総論 ─────────────────── -->
+    <article id="article-00">
+      <p class="article-ch" aria-hidden="true">00</p>
+      <header>
+        <h2 class="article-title">総論｜整えることで、自分に戻っていく命式</h2>
+        <p class="article-subtitle">A life chart for returning to the self</p>
+      </header>
+      <div class="article-tags">
+        <span class="tag">総論</span>
+        <span class="tag">全体運</span>
+        <span class="tag">命式の読み方</span>
+      </div>
+
+      <div class="article-block">
+        <p class="block-label">この命式の核</p>
+        <p class="block-body">
+          中心に鳳閣星があり、自然体でいられることを軸に力が動く。<br>
+          自分の感覚に沿っているとき、継続する。整っていないとき、静かに止まる。<br>
+          強さは前に出ることではなく、自分を保ちながら整え続けることの中にある。<br>
+          社会との接点には調舒星が位置し、外の世界の空気の粗さや言葉の微細なズレに先に気づく。<br>
+          年柱には貫索星があり、自分の輪郭を守る柱として働く。簡単には自分の基準を手放さない。<br>
+          月柱の戊戌は異常干支。普通の型に収まりきらない感覚と、独自の視点をもたらす配置。
+        </p>
+      </div>
+
+      <div class="article-block">
+        <p class="block-label">才能の出方</p>
+        <p class="block-body">
+          まっすぐ前に押し出すより、整えることで深まっていく力。<br>
+          大きな声を出すよりも、細部に気づき、言語化し、静かに形にしていく。<br>
+          人や空間の微細なズレを読む目があり、それが言葉や判断の精度につながる。<br>
+          「何かおかしい」を最初に感じ取れることは、そのまま洞察の精度になる。<br>
+          説明する力、整理する力、翻訳する力。押す力ではなく、読み解く力。
+        </p>
+      </div>
+
+      <div class="article-block">
+        <p class="block-label">悩みやすいこと</p>
+        <p class="block-body">
+          整えているのに、どこか満たされない感覚。<br>
+          ちゃんとやっているのに、しっくりこない。<br>
+          普通の型が自分には少し合わない、という感覚がずっとある。<br>
+          それを「自分の問題」として処理しやすいが、多くは感度の高さと型の不一致から来ている可能性がある。<br>
+          違和感を無視して前に進むほど、消耗が深くなる傾向。
+        </p>
+      </div>
+
+      <div class="article-block">
+        <p class="block-label rx">力が戻る条件</p>
+        <p class="block-body">
+          違和感の少ない環境。自分の美意識を守れる距離感。<br>
+          意味を感じられる仕事と、共鳴できる人間関係。<br>
+          頑張ることより、続けられる状態を整えること。<br>
+          ひとりで静かにいられる時間の確保。<br>
+          「正しいかどうか」より「気持ちよくいられるか」を基準にすること。
+        </p>
+      </div>
+
+      <blockquote class="article-phrase">
+        <span class="phrase-label">合言葉 · Kotoba</span>
+        <p>整えることは、弱さではなく、<br>この命式が力を取り戻す方法。</p>
+      </blockquote>
+    </article>
 
     <!-- ── ARTICLE 01 ────────────────────────── -->
     <article id="article-01">
