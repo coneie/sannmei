@@ -1,0 +1,1379 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Life Chart Apothecary — 命式</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Noto+Sans+JP:wght@300;400&family=Shippori+Mincho:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+
+    /* ══════════════════════════════════════════════
+       1. RESET & BASE
+    ══════════════════════════════════════════════ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --paper:       #ebe4d6;
+      --bone:        #f5f0e7;
+      --clay:        #c8b9a4;
+      --herb:        #6f7562;
+      --moss:        #4d5545;
+      --ink:         #1f1c18;
+      --ash:         #7d766d;
+      --bitter:      #5a4634;
+      --amber:       #9a7a3f;
+      --oxide:       #8d3f2f;
+      --line:        rgba(31, 28, 24, 0.16);
+      --line-strong: rgba(31, 28, 24, 0.32);
+
+      --f-jp:    'Shippori Mincho', 'Noto Serif JP', serif;
+      --f-ui:    'Noto Sans JP', sans-serif;
+      --f-en:    'EB Garamond', serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bone);
+      color: var(--ink);
+      font-family: var(--f-jp);
+      font-weight: 400;
+      line-height: 1.9;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    /* ══════════════════════════════════════════════
+       2. LAYOUT PRIMITIVES
+    ══════════════════════════════════════════════ */
+    .wrap  { max-width: 740px;  margin: 0 auto; padding: 0 2rem; }
+    .wrap-w { max-width: 920px; margin: 0 auto; padding: 0 2rem; }
+
+    .rule {
+      width: 100%;
+      height: 1px;
+      background: var(--line-strong);
+      border: none;
+    }
+
+    /* ══════════════════════════════════════════════
+       3. TYPOGRAPHY UTILITIES
+    ══════════════════════════════════════════════ */
+    .u-label {                        /* UI small label */
+      font-family: var(--f-ui);
+      font-size: 11px;
+      font-weight: 300;
+      letter-spacing: 0.18em;
+      color: var(--ash);
+    }
+
+    .u-label-en {                     /* EN italic label */
+      font-family: var(--f-en);
+      font-size: 12px;
+      font-style: italic;
+      letter-spacing: 0.22em;
+      color: var(--ash);
+    }
+
+    .u-section-en {                   /* section super-label */
+      font-family: var(--f-en);
+      font-size: 11px;
+      font-style: italic;
+      letter-spacing: 0.35em;
+      color: var(--ash);
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+
+    .u-section-h2 {                   /* section heading */
+      font-family: var(--f-jp);
+      font-size: clamp(1.15rem, 3.5vw, 1.5rem);
+      font-weight: 500;
+      color: var(--ink);
+      letter-spacing: 0.06em;
+      line-height: 1.4;
+    }
+
+    /* ══════════════════════════════════════════════
+       4. HERO
+    ══════════════════════════════════════════════ */
+    .hero {
+      background: var(--paper);
+      padding: 4.5rem 2rem 5.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* lined-paper texture */
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent 0px,
+        transparent 27px,
+        rgba(31,28,24,0.045) 27px,
+        rgba(31,28,24,0.045) 28px
+      );
+      pointer-events: none;
+    }
+
+    .hero-inner {
+      max-width: 920px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    .hero-studio {
+      font-family: var(--f-ui);
+      font-size: 10px;
+      font-weight: 300;
+      letter-spacing: 0.32em;
+      color: var(--ash);
+      text-transform: uppercase;
+      margin-bottom: 2.8rem;
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+    }
+
+    .hero-studio::after {
+      content: '';
+      height: 1px;
+      background: var(--line-strong);
+      width: 80px;
+      flex-shrink: 0;
+    }
+
+    .hero-title-en {
+      font-family: var(--f-en);
+      font-size: clamp(3rem, 9.5vw, 6.5rem);
+      font-weight: 400;
+      line-height: 1.0;
+      letter-spacing: -0.015em;
+      color: var(--ink);
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+
+    .hero-title-jp {
+      font-family: var(--f-jp);
+      font-size: clamp(1rem, 3.5vw, 1.65rem);
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      color: var(--bitter);
+      display: block;
+      margin-bottom: 2.8rem;
+    }
+
+    .hero-divider {
+      border: none;
+      border-top: 1px solid var(--line-strong);
+      margin-bottom: 1.8rem;
+    }
+
+    .hero-tagline {
+      font-family: var(--f-en);
+      font-size: clamp(0.82rem, 2vw, 0.95rem);
+      font-style: italic;
+      color: var(--ash);
+      letter-spacing: 0.04em;
+      line-height: 1.7;
+      margin-bottom: 2.5rem;
+    }
+
+    .hero-meta {
+      font-family: var(--f-ui);
+      font-size: 11px;
+      font-weight: 300;
+      letter-spacing: 0.22em;
+      color: var(--clay);
+    }
+
+    /* ══════════════════════════════════════════════
+       5. INDEX NAVIGATION
+    ══════════════════════════════════════════════ */
+    .index-nav {
+      background: var(--bone);
+    }
+
+    .index-nav-inner {
+      max-width: 920px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: grid;
+      grid-template-columns: 140px 1fr;
+      min-height: 0;
+    }
+
+    .index-nav-head {
+      padding: 2rem 2rem 2rem 0;
+      border-right: 1px solid var(--line);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      gap: 0.3rem;
+    }
+
+    .index-nav-head .en {
+      font-family: var(--f-en);
+      font-size: 11px;
+      font-style: italic;
+      letter-spacing: 0.3em;
+      color: var(--ash);
+    }
+
+    .index-nav-head .ja {
+      font-family: var(--f-ui);
+      font-size: 13px;
+      font-weight: 400;
+      letter-spacing: 0.14em;
+      color: var(--bitter);
+    }
+
+    .index-list {
+      list-style: none;
+      padding: 0.5rem 0 0.5rem 2rem;
+      columns: 2;
+      column-gap: 0;
+    }
+
+    .index-list li {
+      border-bottom: 1px solid var(--line);
+      break-inside: avoid;
+    }
+
+    .index-list a,
+    .index-list .idx-soon {
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+      padding: 0.7rem 0.4rem 0.7rem 0;
+      font-family: var(--f-ui);
+      font-size: 12px;
+      font-weight: 300;
+      letter-spacing: 0.06em;
+      color: var(--bitter);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+
+    .index-list a:hover { color: var(--ink); }
+    .index-list .idx-soon { color: var(--clay); cursor: default; }
+
+    .idx-num {
+      font-family: var(--f-en);
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      color: var(--clay);
+      min-width: 1.6rem;
+      flex-shrink: 0;
+    }
+
+    .idx-arrow {
+      margin-left: auto;
+      color: var(--clay);
+      font-size: 14px;
+      flex-shrink: 0;
+    }
+
+    /* ══════════════════════════════════════════════
+       6. SECTION HEADER (reusable)
+    ══════════════════════════════════════════════ */
+    .section-hd {
+      padding-bottom: 1.8rem;
+      margin-bottom: 2.5rem;
+      border-bottom: 1px solid var(--line-strong);
+    }
+
+    /* ══════════════════════════════════════════════
+       7. COMPOSITION PANEL
+    ══════════════════════════════════════════════ */
+    .composition {
+      padding: 5rem 0;
+    }
+
+    /* data micro-label above each sub-table */
+    .data-label {
+      font-family: var(--f-ui);
+      font-size: 10px;
+      font-weight: 300;
+      letter-spacing: 0.22em;
+      color: var(--ash);
+      margin-bottom: 0.9rem;
+      text-transform: uppercase;
+    }
+
+    /* 陰占 table */
+    .chart-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 0.6rem;
+    }
+
+    .chart-table th,
+    .chart-table td {
+      border: 1px solid var(--line-strong);
+      padding: 0.8rem 1rem;
+      text-align: center;
+      letter-spacing: 0.05em;
+    }
+
+    .chart-table thead th {
+      background: var(--paper);
+      font-family: var(--f-ui);
+      font-size: 10px;
+      font-weight: 300;
+      letter-spacing: 0.16em;
+      color: var(--ash);
+    }
+
+    .chart-table tbody th {
+      background: var(--paper);
+      font-family: var(--f-ui);
+      font-size: 10px;
+      font-weight: 300;
+      letter-spacing: 0.14em;
+      color: var(--ash);
+      white-space: nowrap;
+    }
+
+    .chart-table td {
+      font-family: var(--f-jp);
+      font-size: 1.1rem;
+      color: var(--bitter);
+      background: var(--bone);
+    }
+
+    .chart-table .ijo { color: var(--oxide); }
+
+    .chart-note {
+      font-family: var(--f-ui);
+      font-size: 10px;
+      font-weight: 300;
+      letter-spacing: 0.1em;
+      color: var(--ash);
+      margin-bottom: 3rem;
+    }
+
+    /* 人体図 */
+    .hb-wrap { margin-bottom: 3rem; }
+
+    .hb-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      border-top: 1px solid var(--line-strong);
+      border-left: 1px solid var(--line-strong);
+    }
+
+    .hb-cell {
+      border-right: 1px solid var(--line-strong);
+      border-bottom: 1px solid var(--line-strong);
+      padding: 1.3rem 0.7rem;
+      text-align: center;
+      background: var(--bone);
+    }
+
+    .hb-cell.core { background: var(--paper); }
+
+    .hb-pos {
+      font-family: var(--f-ui);
+      font-size: 9px;
+      font-weight: 300;
+      letter-spacing: 0.15em;
+      color: var(--clay);
+      display: block;
+      margin-bottom: 0.45rem;
+    }
+
+    .hb-star {
+      font-family: var(--f-jp);
+      font-size: 14px;
+      color: var(--bitter);
+      letter-spacing: 0.04em;
+    }
+
+    .hb-cell.core .hb-star {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--ink);
+    }
+
+    /* 五行 */
+    .gogyo {
+      display: flex;
+      border: 1px solid var(--line-strong);
+      margin-bottom: 3rem;
+      overflow: hidden;
+    }
+
+    .gogyo-item {
+      flex: 1;
+      padding: 1.2rem 0.4rem;
+      text-align: center;
+      border-right: 1px solid var(--line-strong);
+    }
+
+    .gogyo-item:last-child { border-right: none; }
+
+    .gogyo-kanji {
+      font-family: var(--f-jp);
+      font-size: 14px;
+      color: var(--bitter);
+      display: block;
+      margin-bottom: 0.15rem;
+    }
+
+    .gogyo-en {
+      font-family: var(--f-ui);
+      font-size: 9px;
+      font-weight: 300;
+      letter-spacing: 0.1em;
+      color: var(--clay);
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+
+    .gogyo-num {
+      font-family: var(--f-en);
+      font-size: 2rem;
+      font-weight: 400;
+      color: var(--clay);
+      line-height: 1;
+      display: block;
+    }
+
+    .gogyo-item.dominant .gogyo-num {
+      font-size: 2.6rem;
+      color: var(--bitter);
+    }
+
+    /* meta info */
+    .meta-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: var(--line-strong);
+      border: 1px solid var(--line-strong);
+    }
+
+    .meta-item {
+      background: var(--bone);
+      padding: 1.5rem 1.6rem;
+    }
+
+    .meta-key {
+      font-family: var(--f-ui);
+      font-size: 10px;
+      font-weight: 300;
+      letter-spacing: 0.2em;
+      color: var(--ash);
+      display: block;
+      margin-bottom: 0.6rem;
+    }
+
+    .meta-val {
+      font-family: var(--f-jp);
+      font-size: 14px;
+      color: var(--bitter);
+      line-height: 2;
+      letter-spacing: 0.03em;
+    }
+
+    /* ══════════════════════════════════════════════
+       8. READING ARTICLE
+    ══════════════════════════════════════════════ */
+    .articles {
+      padding: 5rem 0;
+    }
+
+    .article + .article {
+      margin-top: 5rem;
+      padding-top: 5rem;
+      border-top: 1px solid var(--line-strong);
+    }
+
+    .article-ch {
+      font-family: var(--f-en);
+      font-size: clamp(4.5rem, 13vw, 8rem);
+      font-weight: 400;
+      color: var(--clay);
+      line-height: 1;
+      letter-spacing: -0.02em;
+      margin-bottom: 1.2rem;
+      opacity: 0.6;
+    }
+
+    .article-title {
+      font-family: var(--f-jp);
+      font-size: clamp(1.15rem, 4vw, 1.55rem);
+      font-weight: 600;
+      color: var(--ink);
+      line-height: 1.45;
+      letter-spacing: 0.04em;
+      margin-bottom: 0.3rem;
+    }
+
+    .article-subtitle {
+      font-family: var(--f-en);
+      font-size: clamp(0.85rem, 2.2vw, 1rem);
+      font-style: italic;
+      color: var(--ash);
+      letter-spacing: 0.08em;
+      margin-bottom: 1.6rem;
+    }
+
+    .article-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-bottom: 2.8rem;
+    }
+
+    .tag {
+      font-family: var(--f-ui);
+      font-size: 10px;
+      font-weight: 300;
+      letter-spacing: 0.12em;
+      color: var(--ash);
+      border: 1px solid var(--line-strong);
+      padding: 3px 10px;
+    }
+
+    /* blocks */
+    .article-block {
+      padding: 1.8rem 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .article-block:first-of-type {
+      border-top: 1px solid var(--line);
+    }
+
+    .block-label {
+      font-family: var(--f-ui);
+      font-size: 10px;
+      font-weight: 300;
+      letter-spacing: 0.22em;
+      color: var(--ash);
+      margin-bottom: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 0.9rem;
+    }
+
+    .block-label::after {
+      content: '';
+      height: 1px;
+      background: var(--line);
+      width: 2.5rem;
+    }
+
+    /* 処方ブロックはハーブ色のアクセント */
+    .block-label.rx { color: var(--herb); }
+    .block-label.rx::after { background: var(--herb); opacity: 0.4; }
+
+    .block-body {
+      font-family: var(--f-jp);
+      font-size: 15px;
+      line-height: 2.25;
+      color: var(--bitter);
+      letter-spacing: 0.03em;
+    }
+
+    /* 合言葉 */
+    .article-phrase {
+      margin-top: 2.8rem;
+      padding: 2rem 1.5rem;
+      background: var(--paper);
+      border-top: 1px solid var(--line-strong);
+      border-bottom: 1px solid var(--line-strong);
+      text-align: center;
+    }
+
+    .phrase-label {
+      font-family: var(--f-ui);
+      font-size: 9px;
+      font-weight: 300;
+      letter-spacing: 0.28em;
+      color: var(--clay);
+      text-transform: uppercase;
+      display: block;
+      margin-bottom: 1rem;
+    }
+
+    .article-phrase p {
+      font-family: var(--f-jp);
+      font-size: clamp(0.95rem, 2.5vw, 1.05rem);
+      font-weight: 500;
+      color: var(--ink);
+      letter-spacing: 0.1em;
+      line-height: 1.9;
+    }
+
+    /* ══════════════════════════════════════════════
+       9. PRESCRIPTION CARD
+    ══════════════════════════════════════════════ */
+    .prescription-section {
+      background: var(--paper);
+      padding: 5rem 0;
+    }
+
+    .prescription-card {
+      border: 1px solid var(--line-strong);
+      border-left: 3px solid var(--herb);
+      background: var(--bone);
+      max-width: 560px;
+    }
+
+    .rx-header {
+      padding: 1.2rem 1.8rem;
+      border-bottom: 1px solid var(--line-strong);
+      background: var(--paper);
+      display: flex;
+      align-items: baseline;
+      gap: 1.2rem;
+    }
+
+    .rx-header-ja {
+      font-family: var(--f-ui);
+      font-size: 13px;
+      font-weight: 400;
+      letter-spacing: 0.16em;
+      color: var(--bitter);
+    }
+
+    .rx-header-en {
+      font-family: var(--f-en);
+      font-size: 12px;
+      font-style: italic;
+      letter-spacing: 0.12em;
+      color: var(--ash);
+    }
+
+    .rx-row {
+      display: grid;
+      grid-template-columns: 56px 1fr;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .rx-row:last-child { border-bottom: none; }
+
+    .rx-key {
+      padding: 1.3rem 0.6rem 1.3rem 1.4rem;
+      font-family: var(--f-en);
+      font-size: 11px;
+      font-style: italic;
+      letter-spacing: 0.12em;
+      color: var(--herb);
+      border-right: 1px solid var(--line);
+      align-self: stretch;
+      display: flex;
+      align-items: flex-start;
+      padding-top: 1.3rem;
+    }
+
+    .rx-val {
+      padding: 1.3rem 1.8rem;
+      font-family: var(--f-jp);
+      font-size: 14px;
+      line-height: 2;
+      color: var(--bitter);
+      letter-spacing: 0.03em;
+    }
+
+    /* ══════════════════════════════════════════════
+       10. PULL QUOTE
+    ══════════════════════════════════════════════ */
+    .pull-quote {
+      border-left: 1px solid var(--line-strong);
+      padding: 0.3rem 0 0.3rem 1.6rem;
+      margin: 2rem 0;
+    }
+
+    .pull-quote p {
+      font-family: var(--f-en);
+      font-size: clamp(1rem, 3vw, 1.3rem);
+      font-style: italic;
+      color: var(--bitter);
+      line-height: 1.65;
+      letter-spacing: 0.02em;
+    }
+
+    /* ══════════════════════════════════════════════
+       11. GLOSSARY
+    ══════════════════════════════════════════════ */
+    .glossary-section {
+      padding: 5rem 0;
+    }
+
+    .glossary-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1px;
+      background: var(--line-strong);
+      border: 1px solid var(--line-strong);
+      margin-top: 2.5rem;
+    }
+
+    .glossary-item {
+      background: var(--bone);
+      padding: 1.8rem 1.7rem;
+    }
+
+    .glossary-item dt {
+      font-family: var(--f-jp);
+      font-size: clamp(1rem, 3vw, 1.2rem);
+      font-weight: 600;
+      color: var(--ink);
+      letter-spacing: 0.04em;
+      margin-bottom: 0.2rem;
+    }
+
+    .dict-reading {
+      font-family: var(--f-en);
+      font-size: 11px;
+      font-style: italic;
+      letter-spacing: 0.2em;
+      color: var(--ash);
+      display: block;
+      margin-bottom: 0.9rem;
+    }
+
+    .dict-body {
+      font-family: var(--f-jp);
+      font-size: 13px;
+      line-height: 2.1;
+      color: var(--bitter);
+      letter-spacing: 0.02em;
+      display: block;
+    }
+
+    /* ══════════════════════════════════════════════
+       12. FOOTER
+    ══════════════════════════════════════════════ */
+    footer {
+      background: var(--paper);
+      padding: 2.8rem 2rem;
+    }
+
+    .footer-inner {
+      max-width: 920px;
+      margin: 0 auto;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .footer-brand-en {
+      font-family: var(--f-en);
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--bitter);
+      display: block;
+      letter-spacing: 0.04em;
+      margin-bottom: 0.25rem;
+    }
+
+    .footer-brand-ja {
+      font-family: var(--f-ui);
+      font-size: 10px;
+      font-weight: 300;
+      letter-spacing: 0.2em;
+      color: var(--ash);
+      display: block;
+    }
+
+    .footer-copy {
+      font-family: var(--f-ui);
+      font-size: 10px;
+      font-weight: 300;
+      letter-spacing: 0.15em;
+      color: var(--clay);
+    }
+
+    /* ══════════════════════════════════════════════
+       13. RESPONSIVE
+    ══════════════════════════════════════════════ */
+    @media (max-width: 640px) {
+      .wrap, .wrap-w { padding: 0 1.4rem; }
+
+      .index-nav-inner {
+        grid-template-columns: 1fr;
+        padding: 0 1.4rem;
+      }
+      .index-nav-head {
+        border-right: none;
+        border-bottom: 1px solid var(--line);
+        padding: 1.5rem 0 1rem;
+        flex-direction: row;
+        align-items: baseline;
+        gap: 1rem;
+      }
+      .index-list {
+        columns: 1;
+        padding: 0.5rem 0;
+      }
+
+      .meta-grid { grid-template-columns: 1fr; }
+      .glossary-grid { grid-template-columns: 1fr; }
+
+      .prescription-card { max-width: 100%; }
+
+      .gogyo-item { padding: 1rem 0.3rem; }
+      .gogyo-kanji { font-size: 12px; }
+
+      .articles { padding: 4rem 0; }
+      .composition { padding: 4rem 0; }
+      .prescription-section { padding: 4rem 0; }
+      .glossary-section { padding: 4rem 0; }
+    }
+
+    @media (max-width: 420px) {
+      .hb-pos { font-size: 8px; letter-spacing: 0.06em; }
+      .hb-star { font-size: 12px; }
+      .hb-cell.core .hb-star { font-size: 13px; }
+    }
+
+  </style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════
+     HERO
+══════════════════════════════════════════════ -->
+<header class="hero" id="top">
+  <div class="hero-inner">
+    <p class="hero-studio">Sanmeigaku Research Studio</p>
+    <h1>
+      <span class="hero-title-en">Life Chart<br>Apothecary</span>
+      <span class="hero-title-jp">暮らしの占い研究室</span>
+    </h1>
+    <hr class="hero-divider" />
+    <p class="hero-tagline">
+      A quiet prescription for the self,<br>
+      written through stars, elements, and time.
+    </p>
+    <p class="hero-meta">1991年 11月 2日生まれ &ensp;·&ensp; 命式研究記録</p>
+  </div>
+</header>
+
+<hr class="rule" />
+
+<!-- ══════════════════════════════════════════════
+     INDEX NAVIGATION
+══════════════════════════════════════════════ -->
+<nav class="index-nav" id="index" aria-label="目次">
+  <div class="index-nav-inner">
+    <div class="index-nav-head">
+      <span class="en">Index</span>
+      <span class="ja">目次</span>
+    </div>
+    <ol class="index-list">
+      <li><a href="#composition"><span class="idx-num">01</span>命式成分表<span class="idx-arrow">›</span></a></li>
+      <li><a href="#article-01"><span class="idx-num">02</span>鳳閣星の章<span class="idx-arrow">›</span></a></li>
+      <li><a href="#article-02"><span class="idx-num">03</span>調舒星の章<span class="idx-arrow">›</span></a></li>
+      <li><a href="#article-03"><span class="idx-num">04</span>戊戌の章<span class="idx-arrow">›</span></a></li>
+      <li><a href="#prescription"><span class="idx-num">05</span>処方箋<span class="idx-arrow">›</span></a></li>
+      <li><a href="#glossary"><span class="idx-num">06</span>用語辞典<span class="idx-arrow">›</span></a></li>
+      <li><span class="idx-soon"><span class="idx-num">—</span>仕事運の章<span class="idx-arrow">›</span></span></li>
+      <li><span class="idx-soon"><span class="idx-num">—</span>暮らしの章<span class="idx-arrow">›</span></span></li>
+    </ol>
+  </div>
+</nav>
+
+<hr class="rule" />
+
+<!-- ══════════════════════════════════════════════
+     COMPOSITION PANEL — 命式成分表
+══════════════════════════════════════════════ -->
+<section class="composition" id="composition">
+  <div class="wrap-w">
+
+    <div class="section-hd">
+      <span class="u-section-en">Composition Panel · 命式成分表</span>
+      <h2 class="u-section-h2">あなたの命式の構成</h2>
+    </div>
+
+    <!-- 陰占 -->
+    <p class="data-label">陰占 — Shadow Chart</p>
+    <div style="overflow-x:auto; margin-bottom:0.7rem;">
+      <table class="chart-table">
+        <thead>
+          <tr>
+            <th style="width:80px;"></th>
+            <th>年柱 · No.13</th>
+            <th>月柱 · No.35</th>
+            <th>日柱 · No.8</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th>天干</th>
+            <td>丙</td>
+            <td class="ijo">戊</td>
+            <td>辛</td>
+          </tr>
+          <tr>
+            <th>地支</th>
+            <td>子</td>
+            <td class="ijo">戌</td>
+            <td>未</td>
+          </tr>
+          <tr>
+            <th>蔵干</th>
+            <td>癸</td>
+            <td>戊</td>
+            <td>己</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="chart-note" style="margin-bottom:3rem;">
+      ※ <span style="color:var(--oxide);">橙字</span>は異常干支 — an exceptional configuration bearing distinct energy.
+    </p>
+
+    <!-- 陽占 人体図 -->
+    <p class="data-label">陽占 — Light Chart / 人体図</p>
+    <div class="hb-wrap">
+      <div class="hb-grid">
+        <div class="hb-cell"><span class="hb-pos">ご先祖様</span><span class="hb-star">貫索星</span></div>
+        <div class="hb-cell"><span class="hb-pos">目上</span><span class="hb-star">司禄星</span></div>
+        <div class="hb-cell"><span class="hb-pos">初年運</span><span class="hb-star">天堂星</span></div>
+        <div class="hb-cell"><span class="hb-pos">配偶者</span><span class="hb-star">牽牛星</span></div>
+        <div class="hb-cell core"><span class="hb-pos">中心</span><span class="hb-star">鳳閣星</span></div>
+        <div class="hb-cell"><span class="hb-pos">社会</span><span class="hb-star">調舒星</span></div>
+        <div class="hb-cell"><span class="hb-pos">晩年運</span><span class="hb-star">天報星</span></div>
+        <div class="hb-cell"><span class="hb-pos">目下</span><span class="hb-star">鳳閣星</span></div>
+        <div class="hb-cell"><span class="hb-pos">中年運</span><span class="hb-star">天庫星</span></div>
+      </div>
+      <p class="chart-note" style="margin-top:0.5rem; margin-bottom:3rem;">中心宮の星が命式の軸となる</p>
+    </div>
+
+    <!-- 五行 -->
+    <p class="data-label">五行バランス — Five Elements</p>
+    <div class="gogyo" style="margin-bottom:3rem;">
+      <div class="gogyo-item">
+        <span class="gogyo-kanji">木</span>
+        <span class="gogyo-en">Wood</span>
+        <span class="gogyo-num">0</span>
+      </div>
+      <div class="gogyo-item">
+        <span class="gogyo-kanji">火</span>
+        <span class="gogyo-en">Fire</span>
+        <span class="gogyo-num">1</span>
+      </div>
+      <div class="gogyo-item dominant">
+        <span class="gogyo-kanji">土</span>
+        <span class="gogyo-en">Earth</span>
+        <span class="gogyo-num">3</span>
+      </div>
+      <div class="gogyo-item">
+        <span class="gogyo-kanji">金</span>
+        <span class="gogyo-en">Metal</span>
+        <span class="gogyo-num">1</span>
+      </div>
+      <div class="gogyo-item">
+        <span class="gogyo-kanji">水</span>
+        <span class="gogyo-en">Water</span>
+        <span class="gogyo-num">1</span>
+      </div>
+    </div>
+
+    <!-- 天中殺 / 位相法 -->
+    <div class="meta-grid">
+      <div class="meta-item">
+        <span class="meta-key">天中殺 — Void Period</span>
+        <span class="meta-val">
+          申酉 天中殺<br>
+          年：2028.2.4 — 2030.2.3<br>
+          月：2026.8.7 — 2026.10.7<br>
+          <span style="font-family:var(--f-en);font-style:italic;font-size:12px;color:var(--ash);">宿命天中殺なし</span>
+        </span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-key">位相法 — Positional Law</span>
+        <span class="meta-val">
+          日柱＋年柱 — 干合, 害<br>
+          月柱＋年柱 — 庫刑
+        </span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<hr class="rule" />
+
+<!-- ══════════════════════════════════════════════
+     READING ARTICLES
+══════════════════════════════════════════════ -->
+<section class="articles" id="articles">
+  <div class="wrap">
+
+    <!-- ── ARTICLE 01 ────────────────────────── -->
+    <article id="article-01">
+      <p class="article-ch" aria-hidden="true">01</p>
+      <header>
+        <h2 class="article-title">鳳閣星｜自然体という名の精密設計</h2>
+        <p class="article-subtitle">The quiet architecture of ease</p>
+      </header>
+      <div class="article-tags">
+        <span class="tag">鳳閣星</span>
+        <span class="tag">中心星</span>
+        <span class="tag">自然体</span>
+      </div>
+
+      <div class="article-block">
+        <p class="block-label">現象</p>
+        <p class="block-body">
+          無理をしているつもりはないのに、気持ちよくないことが続くと急に動けなくなる。
+          頑張れない自分を責めることもあるが、
+          実はその「止まる」という反応こそが、鳳閣星の正直さだ。
+        </p>
+      </div>
+
+      <div class="article-block">
+        <p class="block-label">命式的な理由</p>
+        <p class="block-body">
+          中心星の鳳閣星は、自分の感覚に合う状態を大切にする星。
+          頑張ることよりも、自然に続くことに力が出る。
+          命式の中心にこの星があることは、人生の軸が「快・不快」の感覚にある、
+          ということを静かに意味している。
+        </p>
+      </div>
+
+      <div class="article-block">
+        <p class="block-label">生活で起きること</p>
+        <p class="block-body">
+          納得できないものにはエネルギーが乗らず、
+          心地よいものには驚くほど自然と継続力が出る。
+          「やればできる」という言葉が、ときに自分を遠ざける。
+        </p>
+      </div>
+
+      <div class="article-block">
+        <p class="block-label rx">処方</p>
+        <p class="block-body">
+          努力量ではなく、違和感の少ない導線を作る。
+          気合いではなく、環境を整える。
+          「なぜ続かないのか」を責めるより、「どうあれば自然に動けるか」を設計し直す。
+        </p>
+      </div>
+
+      <blockquote class="article-phrase">
+        <span class="phrase-label">合言葉 · Kotoba</span>
+        <p>自然体は、手抜きではなく設計である。</p>
+      </blockquote>
+    </article>
+
+    <!-- ── ARTICLE 02 ────────────────────────── -->
+    <article class="article" id="article-02">
+      <p class="article-ch" aria-hidden="true">02</p>
+      <header>
+        <h2 class="article-title">調舒星｜違和感を拾ってしまう人へ</h2>
+        <p class="article-subtitle">The burden of refined perception</p>
+      </header>
+      <div class="article-tags">
+        <span class="tag">調舒星</span>
+        <span class="tag">感性</span>
+        <span class="tag">違和感</span>
+      </div>
+
+      <div class="article-block">
+        <p class="block-label">現象</p>
+        <p class="block-body">
+          人が通り過ぎる小さな言葉、空気、配置のズレに、先に気づいてしまう。
+          「気にしすぎ」と言われることがあるが、
+          その感度こそがこの星の本質的な働きだ。
+        </p>
+      </div>
+
+      <div class="article-block">
+        <p class="block-label">命式的な理由</p>
+        <p class="block-body">
+          調舒星は繊細な感受性と美意識の星。
+          微細なものを受け取る力が強く、整わない状態に長くいると疲れやすい。
+          社会宮にあることで、外の世界への感度が特に強くなっている。
+        </p>
+      </div>
+
+      <div class="article-block">
+        <p class="block-label">生活で起きること</p>
+        <p class="block-body">
+          部屋、人間関係、仕事の進め方に対して、
+          説明しにくい疲れや違和感が残りやすい。
+          環境が整うと驚くほど力が出るが、合わない場所では消耗が早い。
+        </p>
+      </div>
+
+      <div class="article-block">
+        <p class="block-label rx">処方</p>
+        <p class="block-body">
+          違和感を否定せず、まず言葉にする。
+          解決よりも観察を先に置く。
+          感度を下げようとするより、感度を活かせる場所を選ぶ方が根本的な解決になる。
+        </p>
+      </div>
+
+      <blockquote class="article-phrase">
+        <span class="phrase-label">合言葉 · Kotoba</span>
+        <p>違和感は、壊れた場所ではなく、感度が働いている場所。</p>
+      </blockquote>
+    </article>
+
+    <!-- ── ARTICLE 03 ────────────────────────── -->
+    <article class="article" id="article-03">
+      <p class="article-ch" aria-hidden="true">03</p>
+      <header>
+        <h2 class="article-title">戊戌｜整っているのに満たされない理由</h2>
+        <p class="article-subtitle">The beautiful unrest of the unconventional</p>
+      </header>
+      <div class="article-tags">
+        <span class="tag">戊戌</span>
+        <span class="tag">異常干支</span>
+        <span class="tag">感性のズレ</span>
+      </div>
+
+      <div class="article-block">
+        <p class="block-label">現象</p>
+        <p class="block-body">
+          普通に暮らしているのに、どこか自分だけ少し違う場所に立っているように感じる。
+          整えたはずなのに、満足しきれない。
+          この感覚には、命式的な理由がある。
+        </p>
+      </div>
+
+      <div class="article-block">
+        <p class="block-label">命式的な理由</p>
+        <p class="block-body">
+          戊戌は異常干支のひとつで、普通の型に収まりきらない感覚や
+          独自の基準が出やすい配置。
+          月柱にあることで、日常の仕事や習慣の中でこの感覚が表れやすい。
+          これは欠点ではなく、他にはない視点の源だ。
+        </p>
+      </div>
+
+      <div class="article-block">
+        <p class="block-label">生活で起きること</p>
+        <p class="block-body">
+          整えたはずなのに満足しきれない。
+          選んだはずなのに、まだ何か足りない気がする。
+          人と同じやり方をなぞるほど、なぜか力が出ない。
+        </p>
+      </div>
+
+      <div class="article-block">
+        <p class="block-label rx">処方</p>
+        <p class="block-body">
+          普通に合わせるより、自分の基準が健やかに出せる場所を選ぶ。
+          「なぜ同じようにできないのか」ではなく、
+          「なぜ自分は違うのか」を、責任ではなく興味として持つ。
+        </p>
+      </div>
+
+      <blockquote class="article-phrase">
+        <span class="phrase-label">合言葉 · Kotoba</span>
+        <p>型から外れることは、乱れることではなく、自分の形に戻ること。</p>
+      </blockquote>
+    </article>
+
+    <!--
+    ════════════════════════════════════════════════
+    ARTICLE TEMPLATE — 記事を追加するときはここをコピー
+    ────────────────────────────────────────────────
+    1. 下のブロックをコピーする
+    2. article-03 の </article> の直後に貼り付ける
+    3. id="article-XX" の番号を更新する
+    4. 各テキストを書き換える
+
+    <article class="article" id="article-XX">
+      <p class="article-ch" aria-hidden="true">XX</p>
+      <header>
+        <h2 class="article-title">星名｜記事タイトル</h2>
+        <p class="article-subtitle">English subtitle in italics</p>
+      </header>
+      <div class="article-tags">
+        <span class="tag">タグ1</span>
+        <span class="tag">タグ2</span>
+        <span class="tag">タグ3</span>
+      </div>
+
+      <div class="article-block">
+        <p class="block-label">現象</p>
+        <p class="block-body">日常で起きていること。体感ベースで書く。</p>
+      </div>
+
+      <div class="article-block">
+        <p class="block-label">命式的な理由</p>
+        <p class="block-body">星・五行・干支からの解説。</p>
+      </div>
+
+      <div class="article-block">
+        <p class="block-label">生活で起きること</p>
+        <p class="block-body">実際の悩みや行動パターン。</p>
+      </div>
+
+      <div class="article-block">
+        <p class="block-label rx">処方</p>
+        <p class="block-body">どう扱うと楽になるか。</p>
+      </div>
+
+      <blockquote class="article-phrase">
+        <span class="phrase-label">合言葉 · Kotoba</span>
+        <p>その章を象徴する、短い一文。</p>
+      </blockquote>
+    </article>
+
+    目次 (.index-list) にも項目を追加するのを忘れずに。
+    用語辞典 (.glossary-grid) にも関連語を追加できます。
+    ════════════════════════════════════════════════
+    -->
+
+  </div>
+</section>
+
+<hr class="rule" />
+
+<!-- ══════════════════════════════════════════════
+     PRESCRIPTION CARD — 処方箋
+══════════════════════════════════════════════ -->
+<section class="prescription-section" id="prescription">
+  <div class="wrap-w">
+
+    <div class="section-hd">
+      <span class="u-section-en">Prescription Card · 処方箋</span>
+      <h2 class="u-section-h2">鳳閣星の処方</h2>
+    </div>
+
+    <div class="prescription-card">
+      <div class="rx-header">
+        <span class="rx-header-ja">処方箋</span>
+        <span class="rx-header-en">Prescription for Hōkaku-sei</span>
+      </div>
+      <div class="rx-row">
+        <span class="rx-key">When</span>
+        <span class="rx-val">
+          気力が続かず、「自分には意志が足りない」と感じているとき。
+          「なぜ続かないのか」と自分を責め始めているとき。
+        </span>
+      </div>
+      <div class="rx-row">
+        <span class="rx-key">Take</span>
+        <span class="rx-val">
+          今、無理なく続いていることを一つ書き出す。
+          その「続く理由」をゆっくり観察する。
+          違和感の少ない導線を、一本だけ整える。
+        </span>
+      </div>
+      <div class="rx-row">
+        <span class="rx-key">Avoid</span>
+        <span class="rx-val">
+          気合いで続けようとすること。
+          理由のわからない習慣を増やすこと。
+          意志の問題に帰結させること。
+        </span>
+      </div>
+      <div class="rx-row">
+        <span class="rx-key">Note</span>
+        <span class="rx-val">
+          続けられないのは意志の弱さではない。
+          環境と導線の問題である可能性が高い。
+        </span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<hr class="rule" />
+
+<!-- ══════════════════════════════════════════════
+     GLOSSARY — 用語辞典
+══════════════════════════════════════════════ -->
+<section class="glossary-section" id="glossary">
+  <div class="wrap-w">
+
+    <div class="section-hd">
+      <span class="u-section-en">Glossary · 用語辞典</span>
+      <h2 class="u-section-h2">言葉を解く</h2>
+    </div>
+
+    <dl class="glossary-grid">
+      <!-- 用語を追加する場合：この dl の中に <div class="glossary-item"> を追加する -->
+
+      <div class="glossary-item" id="dict-hokaku">
+        <dt>鳳閣星</dt>
+        <dd class="dict-reading">Hōkaku-sei · The Phoenix Star</dd>
+        <dd class="dict-body">自由な表現と創造を愛する星。自然体を大切にし、「気合い」より「流れ」で生きることに力が宿る。中心星にある場合、人生の軸そのものがこの質を帯びる。</dd>
+      </div>
+
+      <div class="glossary-item" id="dict-chojo">
+        <dt>調舒星</dt>
+        <dd class="dict-reading">Chōjo-sei · The Refining Star</dd>
+        <dd class="dict-body">繊細さと審美眼を司る星。物事の微細なズレを感知する力が高く、整った環境では大きく力を発揮する。消耗しやすさと美しさが表裏一体の星。</dd>
+      </div>
+
+      <div class="glossary-item" id="dict-ijo">
+        <dt>異常干支</dt>
+        <dd class="dict-reading">Ijō Kanshi · Exceptional Configuration</dd>
+        <dd class="dict-body">通常の秩序から外れたエネルギーを持つ干支の組み合わせ。一般的な型に収まりきらない独自性と、優れた洞察力や言語化能力をもたらす。</dd>
+      </div>
+
+      <div class="glossary-item" id="dict-bojo">
+        <dt>戊戌</dt>
+        <dd class="dict-reading">Tsuchinoe-Inu · Earth Dog</dd>
+        <dd class="dict-body">異常干支のひとつ。月柱にある場合、日常の習慣の中で「型にはまらない感覚」として現れやすい。その違いは欠点ではなく、独自視点の源。</dd>
+      </div>
+
+      <div class="glossary-item" id="dict-gogyo">
+        <dt>五行</dt>
+        <dd class="dict-reading">Go-gyō · Five Elements</dd>
+        <dd class="dict-body">木・火・土・金・水の5つのエネルギー。各柱の干支がいずれかの五行を持ち、そのバランスが性質と運の傾向を形成する。この命式では土が突出して強い。</dd>
+      </div>
+
+      <div class="glossary-item" id="dict-tenchu">
+        <dt>天中殺</dt>
+        <dd class="dict-reading">Ten-chū-satsu · Void Period</dd>
+        <dd class="dict-body">努力が実を結びにくい「虚の期間」。新しいことを始めるより、内省・準備・根を張ることに充てると、次の時期の力になる。申酉は2年周期で訪れる。</dd>
+      </div>
+
+      <div class="glossary-item" id="dict-tenku">
+        <dt>天庫星</dt>
+        <dd class="dict-reading">Tenko-sei · The Archive Star</dd>
+        <dd class="dict-body">蓄積と継承を司る星。知識や経験を積み重ねることに強みが出る。中年運にあるため、30〜40代にその質が前面に出やすい。</dd>
+      </div>
+
+      <div class="glossary-item" id="dict-tenpo">
+        <dt>天報星</dt>
+        <dd class="dict-reading">Tenpō-sei · The Return Star</dd>
+        <dd class="dict-body">純粋さと原点回帰の力を持つ星。晩年運にあることで、年齢を重ねるほど自分らしい感覚が戻ってくる傾向を示す。</dd>
+      </div>
+
+    </dl>
+
+  </div>
+</section>
+
+<hr class="rule" />
+
+<!-- ══════════════════════════════════════════════
+     FOOTER
+══════════════════════════════════════════════ -->
+<footer>
+  <div class="footer-inner">
+    <div>
+      <span class="footer-brand-en">Life Chart Apothecary</span>
+      <span class="footer-brand-ja">暮らしの占い研究室 &ensp;·&ensp; 1991年 11月 2日生まれ</span>
+    </div>
+    <p class="footer-copy">© 2026 Sanmeigaku Research Studio</p>
+  </div>
+</footer>
+
+</body>
+</html>
