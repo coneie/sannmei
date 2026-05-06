@@ -498,7 +498,36 @@
     }
 
     /* ══════════════════════════════════════════════
-       10. CHART EVIDENCE (data tables)
+       10. CASE NOTES
+    ══════════════════════════════════════════════ */
+    .case-notes { padding: 5rem 0; }
+
+    .case-item { margin-bottom: 3.5rem; }
+    .case-item:last-child { margin-bottom: 0; }
+
+    .case-label {
+      display: flex;
+      align-items: baseline;
+      gap: 0.9rem;
+      margin-bottom: 1rem;
+      font-family: var(--f-jp);
+      font-size: clamp(0.95rem, 2.5vw, 1.05rem);
+      font-weight: 500;
+      color: var(--ink);
+      letter-spacing: 0.04em;
+    }
+
+    .case-num {
+      font-family: var(--f-en);
+      font-size: 11px;
+      font-style: italic;
+      letter-spacing: 0.2em;
+      color: var(--clay);
+      flex-shrink: 0;
+    }
+
+    /* ══════════════════════════════════════════════
+       11. CHART EVIDENCE (data tables)
     ══════════════════════════════════════════════ */
     .evidence { padding: 5rem 0; }
 
@@ -855,6 +884,7 @@
       .overview      { padding: 4rem 0; }
       .when-lost     { padding: 4rem 0; }
       .rx-section    { padding: 4rem 0; }
+      .case-notes    { padding: 4rem 0; }
       .evidence      { padding: 4rem 0; }
       .star-notes    { padding: 4rem 0; }
       .glossary-section { padding: 4rem 0; }
@@ -912,7 +942,7 @@
       <li><a href="#evidence"><span class="idx-num">05</span>命式の根拠<span class="idx-arrow">›</span></a></li>
       <li><a href="#star-notes"><span class="idx-num">06</span>星別ノート<span class="idx-arrow">›</span></a></li>
       <li><a href="#glossary"><span class="idx-num">07</span>用語辞典<span class="idx-arrow">›</span></a></li>
-      <li><span class="idx-soon"><span class="idx-num">—</span>仕事運<span class="idx-arrow">›</span></span></li>
+      <li><a href="#case-notes"><span class="idx-num">08</span>場面別の処方箋<span class="idx-arrow">›</span></a></li>
     </ol>
   </div>
 </nav>
@@ -1125,6 +1155,166 @@
           力が戻るのは、もっと頑張るときではない。
           自分の感性が消耗しない状態に戻ったとき、静かに動き始める。
         </span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<hr class="rule" />
+
+<!-- ══════════════════════════════════════════════
+     CASE NOTES — 場面別の処方箋
+══════════════════════════════════════════════ -->
+<section class="case-notes" id="case-notes">
+  <div class="wrap">
+
+    <div class="section-hd">
+      <span class="u-section-en">Case Notes · 場面別の処方箋</span>
+      <h2 class="u-section-h2">こんなとき、この命式はどう動くか</h2>
+    </div>
+
+    <!-- Case 01 -->
+    <div class="case-item">
+      <p class="case-label"><span class="case-num">Case 01</span>評価が辛いとき</p>
+      <div class="rx-card">
+        <div class="rx-header">
+          <span class="rx-header-ja">処方箋</span>
+          <span class="rx-header-en">When feedback lands harder than it should</span>
+        </div>
+        <div class="rx-row">
+          <span class="rx-key">When</span>
+          <span class="rx-val">頑張ったのに評価されない。フィードバックの言葉が、予想より深く刺さる。</span>
+        </div>
+        <div class="rx-row">
+          <span class="rx-key">Take</span>
+          <span class="rx-val">
+            <ul>
+              <li>評価の言葉を「そのまま受け取らない」。解釈を一度置く</li>
+              <li>調舒星の感度は、批判を通常より深く処理する。異常ではない</li>
+              <li>「この評価は、私の全部ではない」と一度声に出す</li>
+            </ul>
+          </span>
+        </div>
+        <div class="rx-row">
+          <span class="rx-key">Avoid</span>
+          <span class="rx-val">
+            <ul>
+              <li>評価を、自分の価値と直結させる</li>
+              <li>「もっと鈍くならなければ」と思う</li>
+            </ul>
+          </span>
+        </div>
+        <div class="rx-row">
+          <span class="rx-key">Note</span>
+          <span class="rx-val">感度が高いから傷つく。それは同時に、細部を掴める力でもある。感度を消そうとしなくていい。</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Case 02 -->
+    <div class="case-item">
+      <p class="case-label"><span class="case-num">Case 02</span>人と関わるのがしんどいとき</p>
+      <div class="rx-card">
+        <div class="rx-header">
+          <span class="rx-header-ja">処方箋</span>
+          <span class="rx-header-en">When being around people has drained you dry</span>
+        </div>
+        <div class="rx-row">
+          <span class="rx-key">When</span>
+          <span class="rx-val">気を遣いすぎて疲れた。場の空気を先に拾いすぎて、帰ってから動けない。</span>
+        </div>
+        <div class="rx-row">
+          <span class="rx-key">Take</span>
+          <span class="rx-val">
+            <ul>
+              <li>ひとりで静かにいられる時間を、先に確保する</li>
+              <li>「関わり方」より「距離感」を整える。引いても、冷たいわけではない</li>
+              <li>消耗した場所・人のパターンをメモする（原因を探すより、観察として）</li>
+            </ul>
+          </span>
+        </div>
+        <div class="rx-row">
+          <span class="rx-key">Note</span>
+          <span class="rx-val">貫索星は、自分の輪郭を保てているときに最もよく動く。距離は冷たさではなく、回復の条件。</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Case 03 -->
+    <div class="case-item">
+      <p class="case-label"><span class="case-num">Case 03</span>自分ばかりしんどいと思うとき</p>
+      <div class="rx-card">
+        <div class="rx-header">
+          <span class="rx-header-ja">処方箋</span>
+          <span class="rx-header-en">When it feels like everyone else is fine except you</span>
+        </div>
+        <div class="rx-row">
+          <span class="rx-key">When</span>
+          <span class="rx-val">みんな普通にやっているのに、なぜか自分だけが消耗している気がする。</span>
+        </div>
+        <div class="rx-row">
+          <span class="rx-key">Take</span>
+          <span class="rx-val">
+            <ul>
+              <li>「みんなが普通にできること」が、自分にとって普通でない可能性を認める</li>
+              <li>自分の消耗パターンを具体的に書き出す（何が重なったとき？）</li>
+              <li>戊戌のある命式は、標準的な方法で動こうとするほど消耗する。構造の問題として読む</li>
+            </ul>
+          </span>
+        </div>
+        <div class="rx-row">
+          <span class="rx-key">Avoid</span>
+          <span class="rx-val">
+            <ul>
+              <li>「自分が弱いから」で終わらせる</li>
+              <li>他者の「普通」を基準にする</li>
+            </ul>
+          </span>
+        </div>
+        <div class="rx-row">
+          <span class="rx-key">Note</span>
+          <span class="rx-val">型に合わない命式が「型通りにやろうとする」のだから、消耗は当然の結果。欠点ではなく、構造の問題。</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Case 04 -->
+    <div class="case-item">
+      <p class="case-label"><span class="case-num">Case 04</span>目標・スケジュール管理が続かないとき</p>
+      <div class="rx-card">
+        <div class="rx-header">
+          <span class="rx-header-ja">処方箋</span>
+          <span class="rx-header-en">When no system ever seems to stick</span>
+        </div>
+        <div class="rx-row">
+          <span class="rx-key">When</span>
+          <span class="rx-val">計画を立てたのに続かない。ノルマ型の管理で燃え尽きる。手帳術を試しても長続きしない。</span>
+        </div>
+        <div class="rx-row">
+          <span class="rx-key">Take</span>
+          <span class="rx-val">
+            <ul>
+              <li>「締め切り・ノルマ型」ではなく「導線・環境型」に切り替える</li>
+              <li>まず「自然に続いていること」を観察する。それが自分の動き方の手がかり</li>
+              <li>タスクを「やる気があるときにやること」ではなく「やりやすい状態をつくること」として設計する</li>
+            </ul>
+          </span>
+        </div>
+        <div class="rx-row">
+          <span class="rx-key">Avoid</span>
+          <span class="rx-val">
+            <ul>
+              <li>意志力で続けようとする</li>
+              <li>他人の手帳術・タスク管理法をそのまま採用する</li>
+              <li>「続かなかった」ことを、意志の弱さとして記録する</li>
+            </ul>
+          </span>
+        </div>
+        <div class="rx-row">
+          <span class="rx-key">Note</span>
+          <span class="rx-val">鳳閣星の命式にノルマ型の管理は合わない。「頑張る」設計より「続く」設計が先。</span>
+        </div>
       </div>
     </div>
 
